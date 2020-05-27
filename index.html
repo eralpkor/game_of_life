@@ -20,11 +20,15 @@
   <div class="container">
     <div class="">
       <div class="">
+        <h1 class="display-3">Game of Life</h1>
+        <h3 class=" text-muted">Rules:</h3>
+        <ul class="list-unstyled">
+          <li>1. Any live cell with fewer than two live neighbors dies, as if by under-population.</li>
+          <li>2. Any live cell with two or three live neighbors lives on to the next generation.</li>
+          <li>3. Any live cell with more than three live neighbors dies, as if by overpopulation.</li>
+          <li>4. Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.</li>
+        </ul>
         <p>
-          1. Any live cell with fewer than two live neighbors dies, as if by under-population.
-          2. Any live cell with two or three live neighbors lives on to the next generation.
-          3. Any live cell with more than three live neighbors dies, as if by overpopulation.
-          4. Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.
 
 
         </p>
@@ -35,9 +39,10 @@
     </div>
     <div class="controllers">
       <i id="play" class="fas fa-play fa-2x"></i>
-      <i id="stop" class="fas fa-stop fa-2x"></i>
       <i id="pause" class="fas fa-pause fa-2x"></i>
-      <p id="timer">0</p>
+      <i id="stop" class="fas fa-stop fa-2x"></i>
+      <i id="random" class="fas fa-random fa-2x"></i>
+      <h4 class="gen-stamp">Generations: <span id="timer">0</span></h4>
     </div>
   </div>
 
@@ -45,6 +50,7 @@
 
 
   <script type="text/javascript" src="./JS/main.js"></script>
+  <!-- <script type="text/javascript" src="./JS/generations.js"></script> -->
 
   <!-- <script type="text/javascript" src="./JS/life.js"></script> -->
 
