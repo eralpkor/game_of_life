@@ -2,6 +2,12 @@
   align-items: center;
 }
 
+.canvas {
+  border: 1px solid black;
+  width: 805px;
+  height: 605px;
+}
+
 .controllers {
   display: flex;
   flex-direction: row;
