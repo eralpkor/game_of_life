@@ -1,16 +1,18 @@
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
-const resolution = 10; // pixels
-canvas.width = 1000;
+const resolution = 5; // pixels
+let cycle = 0;
+const counter = document.getElementById('cycle')
+canvas.width = 900;
 canvas.height = 600;
 
 const col = canvas.width / resolution;
 const row = canvas.height / resolution;
-// let previousFrameTime = 0;
 
 let start = false;
 let custom = false;
 
+// Random grid
 function buildGrid() {
   return (
     new Array(col)
@@ -25,6 +27,16 @@ function buildGrid() {
   );
 }
 
+// custom grid
+function createCustomGrid() {
+  return (
+    new Array(col)
+      .fill(0) // make it iterable
+      // for each column create array of rows fill with 0's
+      .map(() => new Array(row).fill(0))
+  );
+}
+
 // Get the grid
 let grid = buildGrid();
 
@@ -33,6 +45,7 @@ function update() {
     grid = nextGen(grid);
     renderMe(grid);
     requestAnimationFrame(update);
+    // cycle++;
   }
   // else {
   //   // use custom plot
@@ -71,6 +84,7 @@ function nextGen(grid) {
           }
         }
       }
+
       // RULES:
       // 1. Any live cell with fewer than two live neighbors dies
       if (cell && neighborSum < 2) {
@@ -86,11 +100,12 @@ function nextGen(grid) {
       // otherwise exact copy of nextGen will be used.
     }
   }
-
+  cycle++;
+  counter.innerHTML = cycle
   return nextGen;
 }
 
-// create a plot
+// create a plot with canvas
 function renderMe(grid) {
   for (let c = 0; c < grid.length; c++) {
     // colums
@@ -99,10 +114,11 @@ function renderMe(grid) {
       const cell = grid[c][r];
 
       ctx.beginPath();
+      // create rectangle positions and rectangle size
       ctx.rect(c * resolution, r * resolution, resolution, resolution);
-      ctx.fillStyle = cell ? "MEDIUMVIOLETRED" : "SNOW";
+      ctx.fillStyle = cell ? "#ffc107" : "#444";
       ctx.fill(); // fill boxes
-      // ctx.stroke(); // stroke lines
+      ctx.stroke(); // stroke lines
     }
   }
 }
@@ -120,7 +136,7 @@ function createGrid(grid) {
       ctx.beginPath();
       // create rectangle random
       ctx.rect(c * resolution, r * resolution, resolution, resolution);
-      ctx.fillStyle = "SNOW"; // rectangle colors
+      ctx.fillStyle = "#444"; // rectangle colors
       ctx.fill(); // fill boxes
       ctx.stroke(); // stroke lines
     }
@@ -128,7 +144,7 @@ function createGrid(grid) {
 }
 
 function handleClick(e) {
-  ctx.fillStyle = "MEDIUMVIOLETRED";
+  ctx.fillStyle = "#ffc107";
   ctx.beginPath();
 
   ctx.stroke();
@@ -140,13 +156,13 @@ function handleClick(e) {
   );
 }
 
-// const newPlot = [];
-newPlot = new Array(col)
-    .fill(0) // make it iterable
-    // for each column create array of rows fill with 0's
-    .map(() => new Array(row).fill(0));
+// newPlot = new Array(col)
+//     .fill(0) // make it iterable
+//     // for each column create array of rows fill with 0's
+//     .map(() => new Array(row).fill(0));
+let arr = createCustomGrid();
 
-// get the position of the cursor
+// get the position of the cursor && add new cells
 function getCursorPosition(canvas, event) {
   const rect = canvas.getBoundingClientRect();
   const x = event.clientX - rect.left;
@@ -163,15 +179,15 @@ function getCursorPosition(canvas, event) {
   let y_cell = Math.round(y / resolution);
 
   // add random living cells 1's
-  newPlot[y_cell][x_cell] = 1;
-  // newPlot[y_cell] = 1;
-  // console.log(newPlot)
-  // console.log(start)
-  grid = newPlot;
+  arr[y_cell][x_cell] = 1;
+  grid = arr;
+
+  console.log(grid);
 }
 
 // const canvas = document.querySelector('canvas')
 canvas.addEventListener("click", function (e) {
+  e.preventDefault();
   getCursorPosition(canvas, e);
 });
 // custom game cells ends here
@@ -183,33 +199,18 @@ const randomButton = document.getElementById("random");
 const randomPlayButton = document.getElementById("random-play");
 const timer = document.getElementById("timer");
 
-// timer
-function showGens() {
-  return (timer.innerHTML = T++);
-}
-
-let timerInterval = null;
-
-const startTimer = () => {
-  stop();
-  T = 0;
-  timerInterval = setInterval(showGens, 10);
-};
-
-const stop = () => clearInterval(timerInterval);
-
 // Add a disabled class to canvas
 function pointerDisabled() {
-  canvas.classList.add('disabled');
+  canvas.classList.add("disabled");
 }
 
-// 
+//
 function pointerEnabled() {
-  canvas.classList.remove('disabled');
+  canvas.classList.remove("disabled");
 }
 
 function checkDisabled() {
-  return canvas.classList.contains('disabled')
+  return canvas.classList.contains("disabled");
 }
 
 // Button events
@@ -217,7 +218,8 @@ function checkDisabled() {
 playButton.addEventListener("click", function () {
   if (!start) {
     // timer
-    startTimer();
+    isPaused = false;
+    // startTimer();
     requestAnimationFrame(update);
     start = true;
   }
@@ -226,7 +228,8 @@ playButton.addEventListener("click", function () {
 // Pause the animation
 pauseButton.addEventListener("click", function () {
   start = false;
-  stop();
+  // stop();
+  isPaused = true;
 });
 
 // Stop the animation and reset plot
@@ -234,41 +237,72 @@ stopButton.addEventListener("click", function () {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   grid = buildGrid();
   start = false;
-  stop();
-  timer.innerHTML = '0'
+  cycle = 0;
+  counter.innerHTML = 0;
+  ctx.drawImage(background,0,0); 
+  // stop();
+  // timer.innerHTML = "0";
 });
 
 randomButton.addEventListener("click", function () {
+  grid = createCustomGrid();
+
   pointerEnabled();
   createGrid(grid);
-  stop();
+  // stop();
   start = false;
   custom = true;
 });
 
 randomPlayButton.addEventListener("click", function () {
-  grid = newPlot;
-  var flatArr = newPlot.flat();
+  grid = arr;
+  var flatArr = arr.flat();
 
   if (start && !flatArr.includes(1)) {
     return;
   }
   if (!flatArr.includes(1)) {
-    alert('Please add cells to play! ');
-    return
-  }
-  if (checkDisabled()) {
-    console.log(checkDisabled())
+    alert("Please add cells to play! ");
     return;
   }
-   else {
-    pointerDisabled()
+  if (checkDisabled()) {
+    console.log(checkDisabled());
+    return;
+  } else {
+    pointerDisabled();
 
-    grid = newPlot;
-    stop();
-    startTimer();
+    grid = arr;
+    // stop();
+    // startTimer();
     requestAnimationFrame(update);
     start = true;
     console.log(start);
   }
 });
+
+// renderMe(grid);
+
+var background = new Image();
+background.src = "./../img/John_Conway.jpg";
+
+background.onload = function(){
+    ctx.drawImage(background,0,0);   
+}
+
+// let timerInterval = null;
+// let isPaused = false;
+// let T = 0;
+// // timer
+// function showGens() {
+//   if (!isPaused) {
+//     return (timer.innerHTML = T++);
+//   }
+// }
+
+// const startTimer = () => {
+//   stop();
+  
+//   timerInterval = setInterval(showGens, 10);
+// };
+
+// const stop = () => clearInterval(timerInterval);

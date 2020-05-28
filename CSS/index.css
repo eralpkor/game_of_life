@@ -2,18 +2,22 @@
   align-items: center;
 }
 
-.canvas {
+/* .canvas {
   border: 1px solid black;
   width: 805px;
   height: 605px;
-}
+} */
 
-.controllers {
+canvas {
+  background-color: #444;
+}
+/* .controllers {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-}
+  margin-top: 20px;
+} */
 
 i {
   color: purple;
@@ -22,5 +26,9 @@ i {
 }
 
 .gen-stamp {
-  margin-left: 50px;
+  margin-left: 10px;
+}
+
+.rules {
+  margin-top: 30px;
 }

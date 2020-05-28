@@ -19,33 +19,59 @@
 
   <div class="container">
     <div class="">
-      <div class="">
-        <h1 class="display-3">Game of Life</h1>
-        <h3 class=" text-muted">Rules:</h3>
-        <ul class="list-unstyled">
-          <li>1. Any live cell with fewer than two live neighbors dies, as if by under-population.</li>
-          <li>2. Any live cell with two or three live neighbors lives on to the next generation.</li>
-          <li>3. Any live cell with more than three live neighbors dies, as if by overpopulation.</li>
-          <li>4. Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.</li>
-        </ul>
-        <p>
+      <h1 class="display-3">Game of Life</h1>
 
-
-        </p>
+      <!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">John Conway</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
+      <div class="modal-body">
+        The Game of Life (sometimes known simply as Life) is an example of a cellular automaton and a zero-player game. It takes place on an infinite two-dimensional grid in which cells can be ‘on’ (alive) or ‘off’ (dead), and is defined by a set of rules that jointly determine the state of a cell given the state of its neighbors. Following specification of an initial configuration, patterns evolve over time across the grid requiring no further user input (thus ‘zero-player’). First popularized in 1970 in the Scientific American (Gardner, 1970), the Game of Life has attracted lasting appeal among both scientific and amateur communities. One reason for its appeal is that it is very simple to program, yet at the same time it appears to exemplify emergent and self-organized behavior. Even though its (simple) rules are specified at the level of individual cells, one sees entities at coarse-grained ‘higher’ levels of description, whose behaviors are better described by rules at these higher levels.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+ <!-- Modal -->
       <div class="canvas">
         <canvas ></canvas>
       </div>
     </div>
-    <div class="controllers">
+    <div class="container">
       <i id="play" class="fas fa-play fa-2x"></i>
       <i id="pause" class="fas fa-pause fa-2x"></i>
       <i id="stop" class="fas fa-stop fa-2x"></i>
       <i id="random" class="fas fa-random fa-2x"></i>
       <i id="random-play" class="fab fa-google-play fa-2x"></i>
-      <h4 class="gen-stamp">Generations: <span id="timer">0</span></h4>
+
+      <h4 class="gen-stamp">Cycles: <span id="cycle">0</span></h4>
+
+    </div>
+    <div class="rules">
+      <h3 class=" text-muted">Rules:</h3>
+      <ul class="list-unstyled">
+        <li>1. Any live cell with fewer than two live neighbors dies, as if by under-population.</li>
+        <li>2. Any live cell with two or three live neighbors lives on to the next generation.</li>
+        <li>3. Any live cell with more than three live neighbors dies, as if by overpopulation.</li>
+        <li>4. Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.</li>
+      </ul>
     </div>
   </div>
+
+  <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+  Read about Life & Dead
+</button>
+
+
 
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.1.3/pixi.min.js"></script> -->
 
