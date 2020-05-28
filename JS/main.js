@@ -181,8 +181,6 @@ function getCursorPosition(canvas, event) {
   // add random living cells 1's
   arr[y_cell][x_cell] = 1;
   grid = arr;
-
-  console.log(grid);
 }
 
 // const canvas = document.querySelector('canvas')
@@ -266,7 +264,6 @@ randomPlayButton.addEventListener("click", function () {
     return;
   }
   if (checkDisabled()) {
-    console.log(checkDisabled());
     return;
   } else {
     pointerDisabled();
@@ -276,7 +273,6 @@ randomPlayButton.addEventListener("click", function () {
     // startTimer();
     requestAnimationFrame(update);
     start = true;
-    console.log(start);
   }
 });
 

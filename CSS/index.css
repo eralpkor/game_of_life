@@ -2,25 +2,19 @@
   align-items: center;
 }
 
-/* .canvas {
-  border: 1px solid black;
-  width: 805px;
-  height: 605px;
-} */
-
 canvas {
   background-color: #444;
 }
-/* .controllers {
+.controllers {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
   margin-top: 20px;
-} */
+}
 
 i {
-  color: purple;
+  color: #007bff;
   cursor: pointer;
   margin-right: 15px;
 }
@@ -32,3 +26,12 @@ i {
 .rules {
   margin-top: 30px;
 }
+
+.main-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 5%;
+}
+
+button:focus {outline:0;}
