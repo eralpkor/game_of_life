@@ -45,12 +45,7 @@ function update() {
     grid = nextGen(grid);
     renderMe(grid);
     requestAnimationFrame(update);
-    // cycle++;
   }
-  // else {
-  //   // use custom plot
-
-  // }
 }
 
 // generations
@@ -112,7 +107,6 @@ function renderMe(grid) {
     for (let r = 0; r < grid[c].length; r++) {
       // rows
       const cell = grid[c][r];
-
       ctx.beginPath();
       // create rectangle positions and rectangle size
       ctx.rect(c * resolution, r * resolution, resolution, resolution);
@@ -156,10 +150,6 @@ function handleClick(e) {
   );
 }
 
-// newPlot = new Array(col)
-//     .fill(0) // make it iterable
-//     // for each column create array of rows fill with 0's
-//     .map(() => new Array(row).fill(0));
 let arr = createCustomGrid();
 
 // get the position of the cursor && add new cells
@@ -171,7 +161,6 @@ function getCursorPosition(canvas, event) {
 
   // just use the x and y of the clicked point to determine what tile has been clicked.
   //Lets say you have 10 x 10 tiles with the height and width of 10 px.
-
   //If the user clicks the coordinate 67,12 you can divide x and y by ten, and round it off to know which element in your 2d array that represents it.
   // Horizontal ->
   let x_cell = Math.round(Math.trunc(x) / resolution);
@@ -183,7 +172,6 @@ function getCursorPosition(canvas, event) {
   grid = arr;
 }
 
-// const canvas = document.querySelector('canvas')
 canvas.addEventListener("click", function (e) {
   e.preventDefault();
   getCursorPosition(canvas, e);
@@ -226,7 +214,6 @@ playButton.addEventListener("click", function () {
 // Pause the animation
 pauseButton.addEventListener("click", function () {
   start = false;
-  // stop();
   isPaused = true;
 });
 
@@ -238,16 +225,12 @@ stopButton.addEventListener("click", function () {
   cycle = 0;
   counter.innerHTML = 0;
   ctx.drawImage(background,0,0); 
-  // stop();
-  // timer.innerHTML = "0";
 });
 
 randomButton.addEventListener("click", function () {
   grid = createCustomGrid();
-
   pointerEnabled();
   createGrid(grid);
-  // stop();
   start = false;
   custom = true;
 });
@@ -269,14 +252,11 @@ randomPlayButton.addEventListener("click", function () {
     pointerDisabled();
 
     grid = arr;
-    // stop();
-    // startTimer();
     requestAnimationFrame(update);
     start = true;
   }
 });
 
-// renderMe(grid);
 
 var background = new Image();
 background.src = "./../img/John_Conway.jpg";
@@ -285,20 +265,4 @@ background.onload = function(){
     ctx.drawImage(background,0,0);   
 }
 
-// let timerInterval = null;
-// let isPaused = false;
-// let T = 0;
-// // timer
-// function showGens() {
-//   if (!isPaused) {
-//     return (timer.innerHTML = T++);
-//   }
-// }
-
-// const startTimer = () => {
-//   stop();
-  
-//   timerInterval = setInterval(showGens, 10);
-// };
-
-// const stop = () => clearInterval(timerInterval);
+// EOF
