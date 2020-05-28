@@ -1,7 +1,7 @@
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
-const resolution = 10; // pixels
-canvas.width = 1100;
+const resolution = 20; // pixels
+canvas.width = 800;
 canvas.height = 600;
 
 const col = canvas.width / resolution;
@@ -19,13 +19,16 @@ function buildGrid() {
       .map(() => Math.floor(Math.random() * 2)))
 }
 
+// Get the grid
 let grid = buildGrid();
 
 function update() {
   if (start) {
     grid = nextGen(grid);
     renderMe(grid);
-    requestAnimationFrame(update);
+    
+    console.log(grid)
+    // requestAnimationFrame(update);
   } 
 }
 
@@ -119,15 +122,37 @@ function handleClick(e) {
   ctx.fillRect(Math.floor(e.offsetX/resolution)*resolution, Math.floor(e.offsetY/resolution) * resolution, resolution, resolution);
 }
 
+
+const newPlot = new Array(col).fill(0) // make it iterable
+    // for each column create array of rows fill with 0's
+    .map(() => new Array(row).fill(0))
 // get the position of the cursor
 function getCursorPosition(canvas, event) {
   const rect = canvas.getBoundingClientRect()
   const x = event.clientX - rect.left
   const y = event.clientY - rect.top
   console.log("x: " + x + " y: " + y)
-  // ctx.rect(x, y, 100, 100);
-  var getThisShit = ctx.getImageData(x, y, canvas.width, canvas.height)
-  console.log(getThisShit)
+  Math.round(y)
+  console.log("x: " + Math.trunc(x) + " y: " + y)
+  
+  // just use the x and y of the clicked point to determine what tile has been clicked. 
+  //Lets say you have 10 x 10 tiles with the height and width of 10 px.
+
+//If the user clicks the coordnate 67,12 you can divide x and y by ten, and round it off to know which element in your 2d array that represents it.
+  // Horizontal ->
+  let x_cell = Math.round(Math.trunc(x) / resolution)
+  // Vertical ^\
+  let y_cell = Math.round(y / resolution)
+
+  console.log(Math.round(x/resolution))
+  console.log(Math.round(y/resolution))
+  
+      // add random living cells 1's
+      // .map(() => Math.floor(Math.random() * 2)))
+  newPlot[y_cell][x_cell] = 1;
+  // newPlot[y_cell] = 1;
+  console.log(newPlot)
+  // console.log(newPlot[x_cell])
 }
 
 // const canvas = document.querySelector('canvas')
