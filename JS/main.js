@@ -6,6 +6,11 @@ const counter = document.getElementById("cycle");
 const modal = document.getElementById("exampleModal");
 const modalButton = document.getElementById("modal-button");
 const modalX = document.getElementById("modal-x");
+const requestAnimationFrame = window.requestAnimationFrame ||
+window.webkitRequestAnimationFrame ||
+window.mozRequestAnimationFrame ||
+window.msRequestAnimationFrame ||
+window.oRequestAnimationFrame
 
 modalButton.addEventListener("click", () => {
   modal.style.display = "none";
@@ -16,7 +21,7 @@ modalX.addEventListener("click", () => (modal.style.display = "none"));
 const ctx = canvas.getContext("2d");
 let resolution = 5; // pixels
 let cycle = 0;
-canvas.width = 900;
+canvas.width = 1000;
 canvas.height = 600;
 
 const col = canvas.width / resolution;
@@ -28,7 +33,7 @@ button_1.addEventListener("click", () => (resolution = 20));
 button_2.addEventListener("click", () => (resolution = 10));
 button_3.addEventListener("click", () => (resolution = 5));
 
-// Random grid
+// Random grid 2D array
 function buildGrid() {
   return (
     new Array(col)
@@ -42,8 +47,9 @@ function buildGrid() {
       )
   );
 }
+var c = 0;
 
-// Get the grid
+// Create and store the grid
 let grid = buildGrid();
 
 function update() {
@@ -57,6 +63,7 @@ function update() {
 // generations
 function nextGen(grid) {
   // create copy of the grid so we can reference to original
+  // double buffering
   const nextGen = grid.map((arr) => [...arr]); // exact copy of the grid
 
   for (let c = 0; c < grid.length; c++) {
@@ -110,7 +117,7 @@ function nextGen(grid) {
 // create a plot with canvas for regular game
 function renderMe(grid) {
   for (let c = 0; c < grid.length; c++) {
-    // colums
+    // columns
     for (let r = 0; r < grid[c].length; r++) {
       // rows
       const cell = grid[c][r];
@@ -119,7 +126,7 @@ function renderMe(grid) {
       ctx.rect(c * resolution, r * resolution, resolution, resolution);
       ctx.fillStyle = cell ? "#ffc107" : "#444";
       ctx.fill(); // fill boxes
-      ctx.stroke(); // stroke lines
+      // ctx.stroke(); // stroke lines
     }
   }
 }
@@ -149,7 +156,7 @@ function createGrid(grid) {
       ctx.rect(c * resolution, r * resolution, resolution, resolution);
       ctx.fillStyle = "#444"; // rectangle colors
       ctx.fill(); // fill boxes
-      ctx.stroke(); // stroke lines
+      // ctx.stroke(); // stroke lines
     }
   }
 }
@@ -232,6 +239,7 @@ powerButton.addEventListener("click", () => {
   cycle = 0;
   counter.innerHTML = 0;
 });
+
 // Start animation with button
 playButton.addEventListener("click", () => {
   if (!start) {
@@ -256,6 +264,7 @@ stopButton.addEventListener("click", () => {
   cycle = 0;
   counter.innerHTML = 0;
   ctx.drawImage(background, 0, 0);
+  return
 });
 
 randomButton.addEventListener("click", () => {
@@ -296,5 +305,9 @@ background.src = "./../img/John_Conway.jpg";
 background.onload = () => {
   ctx.drawImage(background, 0, 0);
 };
+
+const setList = {
+  'Boatstretcher': '58$156b2o$156bo$157b3o4b2o$158bob3o3bo$158bo2b2o$163bobo2bo$150b2o9bo4b2o$150bobo11b2obo$152b3o6bo2b2o$152bo9bo5bo$153bo9b2o4b2o$153b2obobo5bo3b2o$153b2o4bo4bo$155bo4bo2bo$152bo4b2ob3o$152bo2bob2o$153bo2bo$156b2o$155bo3bobo$160b2o$160bo!',
+}
 
 // EOF
