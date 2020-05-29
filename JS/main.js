@@ -1,14 +1,17 @@
-const canvas = document.querySelector('canvas');
-const button_1 = document.getElementById('button-1');
-const button_2 = document.getElementById('button-2');
-const button_3 = document.getElementById('button-3');
-const counter = document.getElementById('cycle');
-const modal = document.getElementById('exampleModal');
-const modalButton = document.getElementById('modal-button');
-const modalX = document.getElementById('modal-x');
+const canvas = document.querySelector("canvas");
+const button_1 = document.getElementById("button-1");
+const button_2 = document.getElementById("button-2");
+const button_3 = document.getElementById("button-3");
+const counter = document.getElementById("cycle");
+const modal = document.getElementById("exampleModal");
+const modalButton = document.getElementById("modal-button");
+const modalX = document.getElementById("modal-x");
 
-modalButton.addEventListener('click', () => modal.style.display = 'none');
-modalX.addEventListener('click', () => modal.style.display = 'none');
+modalButton.addEventListener("click", () => {
+  modal.style.display = "none";
+  modal.classList.remove = "show";
+});
+modalX.addEventListener("click", () => (modal.style.display = "none"));
 
 const ctx = canvas.getContext("2d");
 let resolution = 5; // pixels
@@ -21,9 +24,9 @@ const row = canvas.height / resolution;
 
 let start = false;
 
-button_1.addEventListener('click', () => resolution = 20);
-button_2.addEventListener('click', () => resolution = 10);
-button_3.addEventListener('click', () => resolution = 5)
+button_1.addEventListener("click", () => (resolution = 20));
+button_2.addEventListener("click", () => (resolution = 10));
+button_3.addEventListener("click", () => (resolution = 5));
 
 // Random grid
 function buildGrid() {
@@ -39,7 +42,6 @@ function buildGrid() {
       )
   );
 }
-
 
 // Get the grid
 let grid = buildGrid();
@@ -100,7 +102,7 @@ function nextGen(grid) {
     }
   }
   cycle++;
-  counter.innerHTML = cycle
+  counter.innerHTML = cycle;
 
   return nextGen;
 }
@@ -188,10 +190,12 @@ function getCursorPosition(canvas, event) {
   grid = arr;
 }
 
-// cursor position 
+// cursor position
 canvas.addEventListener("click", (e) => {
   e.preventDefault();
-  getCursorPosition(canvas, e);
+  if (!start) {
+    getCursorPosition(canvas, e);
+  }
 });
 // custom game cells ends here
 
@@ -200,7 +204,7 @@ const stopButton = document.getElementById("stop");
 const pauseButton = document.getElementById("pause");
 const randomButton = document.getElementById("random");
 const randomPlayButton = document.getElementById("random-play");
-const powerButton = document.getElementById('power-button');
+const powerButton = document.getElementById("power-button");
 
 // Add a disabled class to canvas
 function pointerDisabled() {
@@ -218,13 +222,13 @@ function checkDisabled() {
 
 // Button events
 // Power button to stop everything
-powerButton.addEventListener('click', () => {
+powerButton.addEventListener("click", () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   arr = createCustomGrid();
   grid = buildGrid();
   // grid = arr;
   start = false;
-  ctx.drawImage(background,0,0);
+  ctx.drawImage(background, 0, 0);
   cycle = 0;
   counter.innerHTML = 0;
 });
@@ -251,7 +255,7 @@ stopButton.addEventListener("click", () => {
   start = false;
   cycle = 0;
   counter.innerHTML = 0;
-  ctx.drawImage(background,0,0);
+  ctx.drawImage(background, 0, 0);
 });
 
 randomButton.addEventListener("click", () => {
@@ -270,8 +274,8 @@ randomPlayButton.addEventListener("click", () => {
     return;
   }
   if (!flatArr.includes(1)) {
-    modal.classList.add('show')
-    modal.style.display = "block"
+    modal.classList.add("show");
+    modal.style.display = "block";
     // alert("Please add cells to play! ");
     return;
   }
@@ -286,12 +290,11 @@ randomPlayButton.addEventListener("click", () => {
   }
 });
 
-
 var background = new Image();
 background.src = "./../img/John_Conway.jpg";
 
 background.onload = () => {
-    ctx.drawImage(background,0,0);   
+  ctx.drawImage(background, 0, 0);
 };
 
 // EOF
