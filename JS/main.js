@@ -1,8 +1,12 @@
-const canvas = document.querySelector("canvas");
+const canvas = document.querySelector('canvas');
+const button_1 = document.getElementById('button-1');
+const button_2 = document.getElementById('button-2');
+const button_3 = document.getElementById('button-3');
+const counter = document.getElementById('cycle');
+
 const ctx = canvas.getContext("2d");
-const resolution = 5; // pixels
+let resolution = 5; // pixels
 let cycle = 0;
-const counter = document.getElementById('cycle')
 canvas.width = 900;
 canvas.height = 600;
 
@@ -10,7 +14,10 @@ const col = canvas.width / resolution;
 const row = canvas.height / resolution;
 
 let start = false;
-let custom = false;
+
+button_1.addEventListener('click', () => resolution = 20);
+button_2.addEventListener('click', () => resolution = 10);
+button_3.addEventListener('click', () => resolution = 5)
 
 // Random grid
 function buildGrid() {
@@ -97,6 +104,7 @@ function nextGen(grid) {
   }
   cycle++;
   counter.innerHTML = cycle
+
   return nextGen;
 }
 
@@ -123,7 +131,7 @@ canvas.addEventListener("click", handleClick);
 // create a grid for the custom game clickable
 function createGrid(grid) {
   for (let c = 0; c < grid.length; c++) {
-    // colums
+    // columns
     for (let r = 0; r < grid[c].length; r++) {
       // rows
       // draw the canvas
@@ -137,6 +145,7 @@ function createGrid(grid) {
   }
 }
 
+// Create custom plot
 function handleClick(e) {
   ctx.fillStyle = "#ffc107";
   ctx.beginPath();
@@ -172,7 +181,8 @@ function getCursorPosition(canvas, event) {
   grid = arr;
 }
 
-canvas.addEventListener("click", function (e) {
+// cursor position 
+canvas.addEventListener("click", (e) => {
   e.preventDefault();
   getCursorPosition(canvas, e);
 });
@@ -183,7 +193,7 @@ const stopButton = document.getElementById("stop");
 const pauseButton = document.getElementById("pause");
 const randomButton = document.getElementById("random");
 const randomPlayButton = document.getElementById("random-play");
-const timer = document.getElementById("timer");
+const powerButton = document.getElementById('power-button');
 
 // Add a disabled class to canvas
 function pointerDisabled() {
@@ -200,34 +210,43 @@ function checkDisabled() {
 }
 
 // Button events
+// Power button to stop everything
+powerButton.addEventListener('click', () => {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  grid = buildGrid();
+  // grid = arr;
+  start = false;
+  ctx.drawImage(background,0,0);
+  cycle = 0;
+  counter.innerHTML = 0;
+});
 // Start animation with button
-playButton.addEventListener("click", function () {
+playButton.addEventListener("click", () => {
   if (!start) {
     // timer
     isPaused = false;
-    // startTimer();
     requestAnimationFrame(update);
     start = true;
   }
 });
 
 // Pause the animation
-pauseButton.addEventListener("click", function () {
+pauseButton.addEventListener("click", () => {
   start = false;
   isPaused = true;
 });
 
 // Stop the animation and reset plot
-stopButton.addEventListener("click", function () {
+stopButton.addEventListener("click", () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   grid = buildGrid();
   start = false;
   cycle = 0;
   counter.innerHTML = 0;
-  ctx.drawImage(background,0,0); 
+  ctx.drawImage(background,0,0);
 });
 
-randomButton.addEventListener("click", function () {
+randomButton.addEventListener("click", () => {
   grid = createCustomGrid();
   pointerEnabled();
   createGrid(grid);
@@ -235,7 +254,7 @@ randomButton.addEventListener("click", function () {
   custom = true;
 });
 
-randomPlayButton.addEventListener("click", function () {
+randomPlayButton.addEventListener("click", () => {
   grid = arr;
   var flatArr = arr.flat();
 
@@ -261,8 +280,8 @@ randomPlayButton.addEventListener("click", function () {
 var background = new Image();
 background.src = "./../img/John_Conway.jpg";
 
-background.onload = function(){
+background.onload = () => {
     ctx.drawImage(background,0,0);   
-}
+};
 
 // EOF
