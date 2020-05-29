@@ -3,6 +3,12 @@ const button_1 = document.getElementById('button-1');
 const button_2 = document.getElementById('button-2');
 const button_3 = document.getElementById('button-3');
 const counter = document.getElementById('cycle');
+const modal = document.getElementById('exampleModal');
+const modalButton = document.getElementById('modal-button');
+const modalX = document.getElementById('modal-x');
+
+modalButton.addEventListener('click', () => modal.style.display = 'none');
+modalX.addEventListener('click', () => modal.style.display = 'none');
 
 const ctx = canvas.getContext("2d");
 let resolution = 5; // pixels
@@ -34,15 +40,6 @@ function buildGrid() {
   );
 }
 
-// custom grid
-function createCustomGrid() {
-  return (
-    new Array(col)
-      .fill(0) // make it iterable
-      // for each column create array of rows fill with 0's
-      .map(() => new Array(row).fill(0))
-  );
-}
 
 // Get the grid
 let grid = buildGrid();
@@ -108,7 +105,7 @@ function nextGen(grid) {
   return nextGen;
 }
 
-// create a plot with canvas
+// create a plot with canvas for regular game
 function renderMe(grid) {
   for (let c = 0; c < grid.length; c++) {
     // colums
@@ -126,6 +123,16 @@ function renderMe(grid) {
 }
 
 // custom game cells starts here
+// custom grid
+function createCustomGrid() {
+  return (
+    new Array(col)
+      .fill(0) // make it iterable
+      // for each column create array of rows fill with 0's
+      .map(() => new Array(row).fill(0))
+  );
+}
+
 canvas.addEventListener("click", handleClick);
 
 // create a grid for the custom game clickable
@@ -213,6 +220,7 @@ function checkDisabled() {
 // Power button to stop everything
 powerButton.addEventListener('click', () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  arr = createCustomGrid();
   grid = buildGrid();
   // grid = arr;
   start = false;
@@ -262,7 +270,9 @@ randomPlayButton.addEventListener("click", () => {
     return;
   }
   if (!flatArr.includes(1)) {
-    alert("Please add cells to play! ");
+    modal.classList.add('show')
+    modal.style.display = "block"
+    // alert("Please add cells to play! ");
     return;
   }
   if (checkDisabled()) {
