@@ -19,12 +19,16 @@ i {
   margin-right: 15px;
 }
 
+#power-button {
+  margin-left: 40px;
+}
+
 .gen-stamp {
-  margin-left: 10px;
+  margin-left: 15%;
 }
 
 .rules {
-  margin-top: 30px;
+  margin-top: 10px;
 }
 
 .main-button {
